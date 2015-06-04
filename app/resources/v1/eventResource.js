@@ -3,8 +3,7 @@ var
 	express = require('express'),
   router = express.Router(),
 	npmlog = require('npmlog'),
-	kafkaService = require('../../services/kafkaService'),
-	ruleEngineService = require('../../services/ruleEngineService');
+	kafkaService = require('../../services/kafkaService');
 
 module.exports = function (app) {
   app.use('/v1/events', router);
@@ -24,10 +23,6 @@ router.route('/')
 		npmlog.info((_.isArray(events) ? events.length : 1) + ' event(s) received');
 
 		kafkaService.forwardEvents(events);
-
-		//_.each(events, function(event) {
-		//	ruleEngineService.processEvent(event);
-		//});
 
 		res.send('respond with a resource');
 	});

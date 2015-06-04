@@ -1,6 +1,5 @@
 var
 	_ = require('underscore'),
-	npmlog = require('npmlog'),
 	config = require('../../config/config'),
 	kafka = require('kafka-node'),
 	Producer = kafka.Producer,
@@ -11,24 +10,23 @@ var client, producer;
 if (config.kafka.enable) {
 	client = kafka.Client(config.kafka.connectionString, config.kafka.clientId);
 	producer = new Producer(client);
-}
 
+	producer.on('error', function(error) {
+		console.log(error.message);
+	})
+}
 
 module.exports = {
 	forwardEvents: function(events) {
 		if (config.kafka.enable) {
 			var payloadEvents = _.reduce((_.isArray(events) ? events : [ events ]), function (memo, event) {
-				memo.push({
-					topic: config.kafka.eventTopic,
-					messages: JSON.stringify(event)
-				});
-
+				memo.push(JSON.stringify(event));
 				return memo;
 			}, []);
 
-			producer.send(payloadEvents, function(err, data) {
+			producer.send([{ topic: config.kafka.eventTopic, messages: payloadEvents }], function(err, data) {
 				if (err) {
-					npmlog.warn(err);
+					console.log(err.message);
 				}
 			});
 		}
