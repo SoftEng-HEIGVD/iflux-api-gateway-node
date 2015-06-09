@@ -10,6 +10,10 @@ module.exports = function(basePath) {
 			return res.status(200).json(obj);
 		},
 
+		noContent: function(res) {
+			return res.status(204);
+		},
+
 		serverError: function(res, err) {
 			return res.status(500).json(err);
 		}

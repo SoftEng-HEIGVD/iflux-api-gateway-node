@@ -3,15 +3,16 @@ var
 	express = require('express'),
   router = express.Router(),
 	npmlog = require('npmlog'),
-	kafkaService = require('../../services/kafkaService');
+	kafkaService = require('../../services/kafkaService'),
+	resourceService = require('../../services/resourceServiceFactory')('/v1/events');
 
 module.exports = function (app) {
-  app.use('/v1/events', router);
+  app.use(resourceService.basePath, router);
 };
 
 router.route('/')
 	/**
-	 * POST /events is invoked by clients to notify that a list of events have occcured.
+	 * POST /events is invoked by clients to notify that a list of events have occurred.
 	 * The body of the request is a list of events. Every event has a timestamp, a type,
 	 * a source and a list of properties
 	 *
@@ -24,5 +25,5 @@ router.route('/')
 
 		kafkaService.forwardEvents(events);
 
-		res.send('respond with a resource');
+		resourceService.noContent(res).end();
 	});
