@@ -2,7 +2,6 @@ var
 	_ = require('underscore'),
 	express = require('express'),
   router = express.Router(),
-	npmlog = require('npmlog'),
 	kafkaService = require('../../services/kafkaService'),
 	resourceService = require('../../services/resourceServiceFactory')('/v1/events');
 
@@ -21,7 +20,7 @@ router.route('/')
 	.post(function(req, res) {
   	var events = req.body;
 
-		npmlog.info((_.isArray(events) ? events.length : 1) + ' event(s) received');
+		console.log('%s event(s) received', (_.isArray(events) ? events.length : 1));
 
 		kafkaService.forwardEvents(events);
 

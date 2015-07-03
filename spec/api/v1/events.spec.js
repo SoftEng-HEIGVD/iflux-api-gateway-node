@@ -6,9 +6,9 @@ module.exports = baseTest('Me resource')
 		url: '/v1/events',
 		body: {
 			timestamp: "2015-01-12T05:21:07Z",
-			sourceId: "sourceId",
-			typeId: "typeId",
-			data: {
+			source: "sourceId",
+			type: "http://localhost.localdomain/type1",
+			properties: {
 				test: "v1"
 			}
 		}
@@ -20,16 +20,16 @@ module.exports = baseTest('Me resource')
 		url: '/v1/events',
 		body: [{
 			timestamp: "2015-01-12T05:21:07Z",
-			sourceId: "sourceId",
-			typeId: "eventSource",
-			data: {
+			source: "source",
+			type: "http://localhost.localdomain/type1",
+			properties: {
 				test: "v1"
 			}
 		}, {
 			timestamp: "2015-01-12T05:21:07Z",
-			sourceId: "sourceId",
-			typeId: "typeId",
-			data: {
+			source: "source",
+			type: "http://localhost.localdomain/type2",
+			properties: {
 				test: "v2"
 			}
 		}]
