@@ -24,6 +24,7 @@
     "jsonwebtoken": "^5.0.0",
     "kafka-node": "^0.2.27",
     "method-override": "~2.3.0",
+    "moment": "^2.10.6",
     "morgan": "~1.5.0",
     "npmlog": "^1.2.1",
     "require-directory": "^2.1.0",

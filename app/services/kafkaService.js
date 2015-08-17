@@ -1,5 +1,6 @@
 var
 	_ = require('underscore'),
+  moment = require('moment'),
 	config = require('../../config/config'),
 	kafka = require('kafka-node'),
 	Producer = kafka.Producer,
@@ -20,6 +21,10 @@ module.exports = {
 	forwardEvents: function(events) {
 		if (config.kafka.enable) {
 			var payloadEvents = _.reduce((_.isArray(events) ? events : [ events ]), function (memo, event) {
+        if (_.isUndefined(event.timestamp)) {
+          event.timestamp = moment().toISOString();
+        }
+
 				memo.push(JSON.stringify(event));
 				return memo;
 			}, []);
