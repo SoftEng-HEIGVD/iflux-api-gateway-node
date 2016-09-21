@@ -63,7 +63,7 @@ var config = {
 		host: process.env.HOST || 'localhost',
 		kafka: {
 			enable: true,
-			connectionString: process.env.ZK_PORT_2181_TCP_ADDR + ':' + process.env.ZK_PORT_2181_TCP_PORT,
+			connectionString: process.env.COMPOSE_PROJECT_NAME + '_zookeeper:2181',
 			clientId: 'iflux-api-gateway',
 		  eventTopic: 'iflux-events'
 	  }
